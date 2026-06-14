@@ -1,250 +1,109 @@
-[Domain Com Au Real Estate Agents Scraper](https://apify.com/shahidirfan/Domain-com-au-Real-Estate-Agents-Scraper?fpr=data)
+[Domain Com Au Real Estate Agents Scraper](https://apify.com/easyapi/domain-com-au-real-estate-agents-scraper?fpr=data)
 
-# Domain.com.au Real Estate Agents Scraper
+Extract comprehensive real estate agent data from Domain.com.au with this powerful scraper. Get detailed information about agents, their performance metrics, and agency affiliations automatically.
 
-Extract real estate agent data from Domain.com.au search result pages across Australia. Collect agent names, agency details, profile links, phone numbers, listing activity, and review metrics in a structured dataset for outreach, research, and market analysis.
+## Features ✨
 
-## Features
+- Extract agent contact details including phone numbers and email availability
+- Get performance metrics like total properties for sale, average sold price, and days on market
+- Collect agency information including names, logos, and branding details
+- Support for multiple search URLs and customizable result limits
+- Built-in proxy support for reliable data collection
+- Automated pagination handling
+- Clean, structured JSON output
 
-- **Structured agent collection** — Captures agent records directly from live search results
-- **Clean output** — Removes null, empty, and duplicate values before saving data
-- **Multi-page coverage** — Follows result pages until it reaches your requested limit
-- **Location-based searches** — Start from a specific Domain search URL or use a state shortcut
-- **Useful performance fields** — Includes sale activity, days on market, and review counts
-- **Proxy-ready** — Supports Apify proxy configuration for more reliable runs
+## Output Data 📊
 
-## Use Cases
+- Agent name, job title, and profile URL
+- Contact information (phone, mobile)
+- Performance metrics:
 
-### Lead Generation
+- Total properties for sale
+- Average sold price
+- Average days on market
+- Total sold and auctioned properties
+- Total properties for rent
+- Leasing performance
+- Agency details:
 
-Build targeted agent lists for B2B outreach, partnerships, and prospecting. Export clean profile and contact data for CRM enrichment and sales workflows.
+- Agency name
+- Logo URL
+- Brand colors
+- Profile tier and photo URL
 
-### Market Research
+## Use Cases 🎯
 
-Analyze which agencies and agents are active in specific suburbs or capital-city markets. Compare listing volume, sales activity, and review signals across regions.
+- Lead generation for real estate services
+- Market research and competitor analysis
+- Real estate industry performance tracking
+- Agent recruitment and talent scouting
+- CRM database enrichment
 
-### Competitive Monitoring
+### Input Example
 
-Track agent visibility and agency presence in priority areas. Use the data to understand who dominates a local market and where new opportunities exist.
-
-### Data Enrichment
-
-Append structured agent and agency details to existing real estate datasets. Use the output in reporting, dashboards, and internal databases.
-
----
-
-## Input Parameters
-
-| Parameter | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| `startUrl` | String | No | `https://www.domain.com.au/real-estate-agents/sydney-nsw-2000/` | Domain.com.au agent search URL to scrape |
-| `state` | String | No | — | Optional state shortcut: `nsw`, `vic`, `qld`, `wa`, `sa`, `tas`, `act`, `nt` |
-| `specialization` | String | No | — | Optional specialization filter |
-| `maxResults` | Integer | No | `20` | Maximum number of agent records to collect |
-| `maxPages` | Integer | No | `3` | Maximum number of result pages to process |
-| `proxyConfiguration` | Object | No | `{"useApifyProxy": true}` | Proxy settings for more reliable collection |
-
-If both `startUrl` and `state` are provided, the explicit `startUrl` is used.
-
----
-
-## Output Data
-
-Each dataset item can contain the following fields:
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | String | Agent identifier used in the result data |
-| `agentIdV2` | String | Secondary agent identifier |
-| `agencyId` | Number | Agency identifier |
-| `url` | String | Full Domain.com.au agent profile URL |
-| `profileSlug` | String | Agent profile slug |
-| `name` | String | Full agent name |
-| `firstName` | String | First name |
-| `lastName` | String | Last name |
-| `title` | String | Job title when available |
-| `agency` | String | Agency name |
-| `agencyUrl` | String | Agency profile URL when available |
-| `phone` | String | Office phone number |
-| `mobile` | String | Mobile phone number |
-| `hasEmail` | Boolean | Whether the profile indicates email availability |
-| `profileTier` | String | Profile level shown in results |
-| `profileImage` | String | Agent profile image URL |
-| `agencyLogo` | String | Agency logo URL |
-| `brandColour` | String | Agency or profile brand color |
-| `averageSoldPrice` | Number | Average sold price |
-| `averageSoldDaysOnMarket` | Number | Average days on market |
-| `propertiesForSale` | Number | Current sale listings count |
-| `propertiesForRent` | Number | Current rental listings count |
-| `propertiesSold` | Number | Sold or auctioned properties count |
-| `totalSoldAndAuctioned` | Number | Total sold and auctioned count |
-| `totalJointSoldAndAuctioned` | Number | Joint sold and auctioned count |
-| `totalLeased` | Number | Total leased count |
-| `totalJointLeased` | Number | Joint leased count |
-| `rating` | Number | Overall review rating |
-| `reviewCount` | Number | Total review count |
-| `recentRating` | Number | Recent review rating when available |
-| `recentReviewCount` | Number | Recent review count when available |
-| `source` | String | Source website |
-| `scrapedAt` | String | ISO timestamp of collection |
-
----
-
-## Usage Examples
-
-### Basic Search
-
-Collect agents from a known search page:
+A full explanation of an input example in JSON.
 
 ```
-{
-  "startUrl": "https://www.domain.com.au/real-estate-agents/sydney-nsw-2000/",
-  "maxResults": 20,
-  "maxPages": 3
+{   
+    "searchUrls": [
+        "https://www.domain.com.au/real-estate-agents/samford-valley-qld-4520/"
+    ],
+    "maxItems": 20
 }
 ```
 
-### State-Based Search
+### Output sample
 
-Use a state shortcut and let the actor build a capital-city search:
+The results will be wrapped into a dataset which you can always find in the **Storage** tab. Here's an excerpt from the data you'd get if you apply the input parameters above:
 
-```
-{
-  "state": "vic",
-  "maxResults": 50,
-  "maxPages": 5
-}
-```
-
-### Focused Collection
-
-Collect a larger set for a filtered search:
+And here is the same data but in JSON. You can choose in which format to download your data: JSON, JSONL, Excel spreadsheet, HTML table, CSV, or XML.
 
 ```
-{
-  "startUrl": "https://www.domain.com.au/real-estate-agents/sydney-nsw-2000/",
-  "specialization": "commercial",
-  "maxResults": 100,
-  "maxPages": 10,
-  "proxyConfiguration": {
-    "useApifyProxy": true
-  }
-}
+[
+    {
+        "searchUrl": "https://www.domain.com.au/real-estate-agents/samford-valley-qld-4520/",
+        "__typename": "ContactSearchContact",
+        "id": 1703257,
+        "agentIdV2": "A60970",
+        "agencyId": 33070,
+        "name": "Georgie Haug",
+        "jobTitle": "Sales Agent",
+        "hasEmail": true,
+        "telephone": "07 3289 3289",
+        "mobile": "0411 184 561",
+        "profileTier": "platinum",
+        "profileUrl": "https://www.domain.com.au/real-estate-agent/georgie-haug-1703257",
+        "profilePhoto": "https://rimh2.domainstatic.com.au/wvWBIU24fBOonCOrFxG3bHpsRz8=/232x232/top/filters:no_upscale():format(jpeg):quality(85)/https://images.domain.com.au/img/33070/contact_1703257.jpeg?date=637292956323758237",
+        "totalForSale": 5,
+        "averageSoldPrice": 2186357.1428571427,
+        "averageSoldDaysOnMarket": 69.61538461538461,
+        "totalSoldAndAuctioned": 14,
+        "totalJointSoldAndAuctioned": 0,
+        "totalForRent": 0,
+        "totalLeased": 0,
+        "totalJointLeased": 0,
+        "agencyName": "Belle Property Samford",
+        "agencyLogoUrl": "https://images.domain.com.au/img/Agencys/33070/logo_33070.png?date=638791089191288225",
+        "brandColour": "#386250"
+    },
+    ...
+]
 ```
 
----
+## Related Actors 🤝
 
-## Sample Output
-
-```
-{
-  "id": "900362",
-  "agentIdV2": "A31461",
-  "agencyId": 6877,
-  "url": "https://www.domain.com.au/real-estate-agent/bryn-fowler-900362/",
-  "profileSlug": "bryn-fowler-900362",
-  "name": "Bryn Fowler",
-  "firstName": "Bryn",
-  "lastName": "Fowler",
-  "agency": "Sydney Cove Property",
-  "phone": "02 8259 3333",
-  "mobile": "0423 663 663",
-  "hasEmail": true,
-  "profileTier": "platinum",
-  "brandColour": "#7da3c4",
-  "averageSoldPrice": 1151518.5185185184,
-  "averageSoldDaysOnMarket": 59.88461538461539,
-  "propertiesForSale": 18,
-  "propertiesForRent": 0,
-  "propertiesSold": 28,
-  "totalSoldAndAuctioned": 28,
-  "totalJointSoldAndAuctioned": 33,
-  "totalLeased": 0,
-  "totalJointLeased": 0,
-  "rating": 5,
-  "reviewCount": 7,
-  "recentReviewCount": 0,
-  "source": "https://www.domain.com.au",
-  "scrapedAt": "2026-05-03T11:59:15.212Z"
-}
-```
-
----
-
-## Tips for Best Results
-
-### Start With Working Search URLs
-
-- Use complete Domain.com.au agent-search URLs that already include suburb, state, and postcode
-- Test with `maxResults: 20` before scaling up
-
-### Use Proxies For Better Stability
-
-- Residential proxies improve reliability on protected pages
-- Local runs without a configured Apify proxy token may behave differently than Apify platform runs
-
-### Scale Gradually
-
-- Increase `maxPages` only when needed
-- Start with a narrow suburb search before broader collection
-
----
-
-## Integrations
-
-Connect the dataset with:
-
-- **Google Sheets** — Build searchable lead lists
-- **Airtable** — Store and filter agent records
-- **Make** — Automate downstream enrichment
-- **Zapier** — Trigger notifications and workflows
-- **Webhooks** — Send data into custom systems
-
-### Export Formats
-
-- **JSON** — For applications and APIs
-- **CSV** — For spreadsheets and imports
-- **Excel** — For reporting and analysis
-- **XML** — For system integrations
-
----
-
-## Frequently Asked Questions
-
-### How many agents can I collect?
-
-You can collect up to the result count exposed by the search pages, subject to your `maxResults` and `maxPages` settings.
-
-### Does the actor remove duplicates?
-
-Yes. Records are deduplicated before they are saved to the dataset.
-
-### Why are some fields missing from some records?
-
-Some agents do not expose every field on the source page. The actor keeps the output clean by omitting empty values instead of filling them with nulls.
-
-### Do I need proxies?
-
-Proxies are recommended for reliable collection, especially at larger scale or during repeated runs.
-
-### Can I use a state instead of a full URL?
-
-Yes. You can provide `state` to build a location-based search automatically.
-
----
-
-## Support
-
-For issues or feature requests, use the Apify Console project support flow.
-
-### Resources
-
-- [Apify Documentation](https://docs.apify.com/)
-- [Apify API Reference](https://docs.apify.com/api/v2)
-- [Scheduling Runs](https://docs.apify.com/platform/schedules)
-
----
-
-## Legal Notice
-
-This actor is intended for legitimate data collection, research, and business workflow use. You are responsible for reviewing the target website terms and for using the collected data in compliance with applicable laws and platform policies.
+- [Real Estate Agents Scraper](https://apify.com/easyapi/realtor-com-agent-scraper) - Extract agent profiles from Realtor.com
+- [PropertyFinder Agent Scraper](https://apify.com/easyapi/propertyfinder-agent-scraper) - Scrape agent profiles from PropertyFinder.ae
+- [Rightmove Property Search Scraper](https://apify.com/easyapi/rightmove-property-search-scraper) - Extract property listings from Rightmove
+- [99acres.com Scraper](https://apify.com/easyapi/99acres-com-scraper) - Scrape property listings from India's leading property portal
+- [Housing.com Scraper](https://apify.com/easyapi/housing-com-scraper) - Extract property listings from Housing.com
+- [Land.com Listing Scraper](https://apify.com/easyapi/land-com-listing-scraper) - Scrape land and property listings
+- [VRBO Property Listing Scraper](https://apify.com/easyapi/vrbo-property-listing-scraper) - Extract vacation rental property data
+- [Realtor.com Scraper](https://apify.com/easyapi/realtor-com-scraper) - Scrape real estate listings from Realtor.com
+- [Trulia Property Scraper](https://apify.com/easyapi/trulia-property-scraper) - Extract property listings from Trulia
+- [Funda.nl Scraper](https://apify.com/easyapi/funda-nl-scraper) - Scrape property listings from Netherlands
+- [Bayut List Search Scraper](https://apify.com/easyapi/bayut-list-search-scraper) - Extract property listings from UAE
+- [Dubizzle List Search Scraper](https://apify.com/easyapi/dubizzle-list-search-scraper) - Scrape property listings from UAE
+- [Houzz Professional Scraper](https://apify.com/easyapi/houzz-professional-scraper) - Extract professional profiles from Houzz
+- [BBB Business Directory Scraper](https://apify.com/easyapi/bbb-business-directory-scraper) - Scrape business listings from BBB
+- [YellowPages.ca Scraper](https://apify.com/easyapi/yellowpages-ca-scraper) - Extract business listings from Canadian Yellow Pages
